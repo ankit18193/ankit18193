@@ -1,111 +1,26 @@
 {
   "username": "ankit18193",
-  "name": "Ankit Kumar Yadav",
   "sections": [
-    {
-      "type": "header",
-      "title": "ankit18193@github"
-    },
-    {
-      "type": "kv",
-      "key": "OS",
-      "value": "Windows 11, Linux"
-    },
-    {
-      "type": "dynamic_uptime",
-      "key": "Uptime"
-    },
-    {
-      "type": "kv",
-      "key": "Host",
-      "value": "Software Engineer / Distributed Systems"
-    },
-    {
-      "type": "kv",
-      "key": "IDE",
-      "value": "VS Code, Windows Terminal"
-    },
-    {
-      "type": "blank"
-    },
-    {
-      "type": "kv",
-      "key": "Languages.Programming",
-      "value": "TypeScript, JavaScript, Python, C++, Java"
-    },
-    {
-      "type": "kv",
-      "key": "Languages.Backend",
-      "value": "Node.js, Express.js, Next.js, REST, Socket.io"
-    },
-    {
-      "type": "kv",
-      "key": "Infrastructure",
-      "value": "Redis, BullMQ, Docker, Nginx, AWS, MongoDB"
-    },
-    {
-      "type": "blank"
-    },
-    {
-      "type": "kv",
-      "key": "Focus",
-      "value": "Distributed Systems, Gateways, Fault Tolerance"
-    },
-    {
-      "type": "kv",
-      "key": "Hobbies",
-      "value": "System Design, AI Infrastructure, Performance"
-    },
-    {
-      "type": "blank"
-    },
-    {
-      "type": "header",
-      "title": "Contact"
-    },
-    {
-      "type": "kv",
-      "key": "Email",
-      "value": "ankityadav18193@gmail.com"
-    },
-    {
-      "type": "kv",
-      "key": "LinkedIn",
-      "value": "ankit-yadav-90712324b"
-    },
-    {
-      "type": "kv",
-      "key": "GitHub",
-      "value": "github.com/ankit18193"
-    },
-    {
-      "type": "blank"
-    },
-    {
-      "type": "header",
-      "title": "GitHub Stats"
-    },
-    {
-      "type": "dual_stat",
-      "left": {
-        "key": "Repos",
-        "stat": "repos"
-      },
-      "right": {
-        "key": "Stars",
-        "stat": "stars"
-      }
-    },
-    {
-      "type": "dual_stat",
-      "left": {
-        "key": "Commits",
-        "stat": "commits"
-      },
-      "right": {
-        "key": "Followers",
-        "stat": "followers"
-      }
-    }
+    { "type": "header",         "title": "ankit18193@github" },
+    { "type": "kv",             "key": "OS",                      "value": "Windows 11, Linux" },
+    { "type": "dynamic_uptime", "key": "Uptime" },
+    { "type": "kv",             "key": "Host",                    "value": "Software Engineer / Distributed Systems" },
+    { "type": "kv",             "key": "IDE",                     "value": "VS Code, Windows Terminal" },
+    { "type": "blank" },
+    { "type": "kv",             "key": "Languages.Programming",   "value": "TypeScript, JS, Python, C++" },
+    { "type": "kv",             "key": "Languages.Backend",       "value": "Node.js, Express.js, Next.js" },
+    { "type": "kv",             "key": "Infrastructure",          "value": "Redis, Docker, Nginx, AWS, MongoDB" },
+    { "type": "blank" },
+    { "type": "kv",             "key": "Focus",                   "value": "Scalable APIs, Gateways, Fault Tolerance" },
+    { "type": "kv",             "key": "Hobbies",                 "value": "System Design, AI Infra, Performance" },
+    { "type": "blank" },
+    { "type": "header",         "title": "Contact" },
+    { "type": "kv",             "key": "Email",                   "value": "ankityadav18193@gmail.com" },
+    { "type": "kv",             "key": "LinkedIn",                "value": "ankit-yadav-90712324b" },
+    { "type": "kv",             "key": "GitHub",                  "value": "github.com/ankit18193" },
+    { "type": "blank" },
+    { "type": "header",         "title": "GitHub Stats" },
+    { "type": "dual_stat", "left": { "key": "Repos",   "stat": "repos"     }, "right": { "key": "Stars",     "stat": "stars"     } },
+    { "type": "dual_stat", "left": { "key": "Commits", "stat": "commits"   }, "right": { "key": "Followers", "stat": "followers" } }
   ]
 }
