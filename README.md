@@ -1,3 +1,9 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="dark_mode.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="light_mode.svg" />
+  <img alt="ankit18193's GitHub profile" src="dark_mode.svg" />
+</picture>
+
 # Building the backend behind the backend.
 
 I’m a backend-focused Software Engineer interested in the problems that appear when software stops being a demo and starts becoming a system.
