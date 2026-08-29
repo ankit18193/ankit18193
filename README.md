@@ -4,6 +4,14 @@
   <img alt="ankit18193's GitHub profile" src="dark_mode.svg" />
 </picture>
 
+<h1 align="center">
+  Hey there, I'm <span style="color:#FF8C42;">Ankit</span> 👋
+</h1>
+
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=26&duration=3000&pause=900&color=FFB36B&center=true&vCenter=true&width=750&lines=Backend-Focused+Software+Engineer;Building+Scalable+Backend+Systems;Distributed+Systems+%26+System+Design;AI-Powered+Infrastructure+Builder;Performance+%26+Reliability+Enthusiast" alt="Typing SVG" />
+</p>
+
 
 <h2 align="center">👨‍💻 About Me</h2>
 
