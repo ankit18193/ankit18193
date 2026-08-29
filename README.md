@@ -1,10 +1,48 @@
-# 💫 About Me:
+# Building the backend behind the backend.
 
-Backend-focused Software Engineer building scalable, production-grade systems with a strong focus on performance, reliability, 
-and system design. Experienced in developing API gateways, asynchronous processing pipelines, and AI-integrated backend 
-systems with fault-tolerant architectures, ensuring system observability and stable performance under high-load conditions. 
-<br>
-<br>🔭 I’m currently working on IntelliGate, an AI-powered gateway system built with Next.js, TypeScript, and MongoDB. It focuses on creating a self-optimizing backend using techniques like rate limiting, caching, and adaptive performance handling to build a more resilient and self-healing API layer.<br>👯 I’m looking to collaborate on scalable backend systems, AI-driven applications, and real-world problem-solving platforms.<br>🤝 I’m looking for help with scaling distributed systems and improving AI-driven decision-making in backend architectures.<br>🌱 I’m currently learning advanced backend engineering concepts like distributed systems, caching strategies, and system design.<br>💬 Ask me about backend development, API design, system scalability, or my projects.<br>⚡ Fun fact: I enjoy breaking things just to understand how they work—and then rebuilding them better.
+I’m a backend-focused Software Engineer interested in the problems that appear when software stops being a demo and starts becoming a system.
+
+My work focuses on **scalable backend architecture, distributed systems, performance, reliability, and AI-powered infrastructure** — from API gateways and asynchronous processing to caching, rate limiting, observability, fault tolerance, and intelligent backend decision-making.
+
+Currently building **IntelliGate**, an AI-powered gateway designed around adaptive request handling, intelligent traffic management, caching, rate limiting, and resilient API infrastructure.
+
+I’m particularly interested in what happens when systems are pushed beyond the happy path:
+
+> **What happens at 10× the traffic?**  
+> **What happens when a dependency goes down?**  
+> **What happens when latency starts climbing?**  
+> **Can the system detect the problem, adapt, and recover?**
+
+That is the kind of engineering I enjoy.
+
+### Engineering Focus
+
+**Backend & APIs**  
+TypeScript · Node.js · Express.js · Next.js · REST APIs · Socket.io
+
+**Distributed & Infrastructure**  
+Redis · Caching · Rate Limiting · Async Processing · BullMQ · Job Queues · Fault Tolerance · Observability · System Design
+
+**Data & Search**  
+MongoDB · MySQL · Elasticsearch
+
+**Cloud & DevOps**  
+AWS · Docker · Nginx · Serverless · Vercel
+
+**AI Engineering**  
+LLM APIs · RAG · AI Agents · Prompt Engineering · AI-powered Backend Systems
+
+### Currently Going Deeper Into
+
+Distributed Systems · System Design · Performance Engineering · Scalable AI Infrastructure · Resilient Backend Architecture
+
+### How I Build
+
+**Build → Stress → Observe → Break → Improve.**
+
+I don't stop at **“it works.”**
+
+I want to understand **where it slows down, where it breaks, how it behaves under pressure, and how to design the next version better.**
 
 
 ## 🌐 Socials:
