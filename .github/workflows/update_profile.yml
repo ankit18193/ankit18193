@@ -1,0 +1,47 @@
+name: Update Profile Cards
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight UTC
+  push:
+    branches:
+      - main
+    paths:
+      - 'profile_config.json'
+      - 'generate_cards.py'
+      - 'assets/**'
+      - '.github/workflows/update_profile.yml'
+  workflow_dispatch:  # Allows manual triggering
+
+permissions:
+  contents: write
+
+jobs:
+  update-profile-card:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate Profile SVG Cards
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python generate_cards.py
+
+      - name: Commit and Push if Changed
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dark_mode.svg light_mode.svg
+          if git diff --staged --quiet; then
+            echo "No changes in profile cards."
+          else
+            git commit -m "chore: update dynamic GitHub profile stats [skip ci]"
+            git push
+          fi
