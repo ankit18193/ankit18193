@@ -39,9 +39,9 @@ def fetch_github_stats(username, token=None):
         "repos": "22",
         "contributed_repos": "0",
         "stars": "0",
-        "commits": "150+",
+        "commits": "202+",
         "followers": "1",
-        "following": "0",
+        "following": "2",
     }
 
     # Try GraphQL first if token is available
@@ -159,77 +159,140 @@ def fetch_github_stats(username, token=None):
     return stats
 
 
-def format_row(section, stats, colors, total_width=58):
-    """Formats a single config row into SVG tspan elements."""
-    stype = section.get("type")
+def wrap_text_into_chunks(text, max_len):
+    """Splits comma-separated or space-separated items into lines of max_len."""
+    if len(text) <= max_len:
+        return [text]
 
-    if stype == "header":
-        title = section.get("title", "")
-        # Format: ─ title ─────────────────────────
-        prefix = "─ "
-        title_str = f"{title} "
-        remaining = total_width - len(prefix) - len(title_str)
-        dashes = "─" * max(remaining, 0)
-        return (
-            f'<tspan fill="{colors["header_line"]}">{html.escape(prefix)}</tspan>'
-            f'<tspan fill="{colors["header_title"]}">{html.escape(title_str)}</tspan>'
-            f'<tspan fill="{colors["header_line"]}">{html.escape(dashes)}</tspan>'
-        )
+    parts = [p.strip() for p in text.split(",")]
+    lines = []
+    current_line = []
+    current_len = 0
 
-    elif stype in ("kv", "dynamic_uptime"):
-        key = section.get("key", "")
-        if stype == "dynamic_uptime":
-            value = calculate_uptime(stats["created_at"])
+    for part in parts:
+        added_len = len(part) + (2 if current_line else 0)
+        if current_line and (current_len + added_len > max_len):
+            lines.append(", ".join(current_line))
+            current_line = [part]
+            current_len = len(part)
         else:
-            value = section.get("value", "")
+            current_line.append(part)
+            current_len += added_len
 
-        prefix = f". {key}: "
-        val_str = f" {value}"
-        dots_count = total_width - len(prefix) - len(val_str)
-        if dots_count < 2:
-            dots_count = 2
-        dots = "." * dots_count
+    if current_line:
+        lines.append(", ".join(current_line))
 
-        return (
-            f'<tspan fill="{colors["key"]}">{html.escape(prefix)}</tspan>'
-            f'<tspan fill="{colors["dots"]}">{html.escape(dots)}</tspan>'
-            f'<tspan fill="{colors["value"]}">{html.escape(val_str)}</tspan>'
-        )
+    return lines
 
-    elif stype == "dual_stat":
-        left_key = section["left"]["key"]
-        left_stat_name = section["left"]["stat"]
-        left_val = stats.get(left_stat_name, "0")
 
-        right_key = section["right"]["key"]
-        right_stat_name = section["right"]["stat"]
-        right_val = stats.get(right_stat_name, "0")
+def format_rows(sections, stats, colors, total_width=72):
+    """Formats config sections into list of rendered SVG row strings with multiline support."""
+    rendered_rows = []
 
-        # Total width = 58, separator = " | " (3 chars) -> 55 remaining -> left 27, right 28
-        left_prefix = f". {left_key}: "
-        left_val_str = f" {left_val}"
-        left_dots_count = max(27 - len(left_prefix) - len(left_val_str), 2)
-        left_dots = "." * left_dots_count
+    for sec in sections:
+        stype = sec.get("type")
 
-        right_prefix = f". {right_key}: "
-        right_val_str = f" {right_val}"
-        right_dots_count = max(28 - len(right_prefix) - len(right_val_str), 2)
-        right_dots = "." * right_dots_count
+        if stype == "header":
+            title = sec.get("title", "")
+            prefix = "─ "
+            title_str = f"{title} "
+            remaining = total_width - len(prefix) - len(title_str)
+            dashes = "─" * max(remaining, 0)
+            row = (
+                f'<tspan fill="{colors["header_line"]}">{html.escape(prefix)}</tspan>'
+                f'<tspan fill="{colors["header_title"]}">{html.escape(title_str)}</tspan>'
+                f'<tspan fill="{colors["header_line"]}">{html.escape(dashes)}</tspan>'
+            )
+            rendered_rows.append(row)
 
-        return (
-            f'<tspan fill="{colors["key"]}">{html.escape(left_prefix)}</tspan>'
-            f'<tspan fill="{colors["dots"]}">{html.escape(left_dots)}</tspan>'
-            f'<tspan fill="{colors["stat"]}">{html.escape(left_val_str)}</tspan>'
-            f'<tspan fill="{colors["pipe"]}"> | </tspan>'
-            f'<tspan fill="{colors["key"]}">{html.escape(right_prefix)}</tspan>'
-            f'<tspan fill="{colors["dots"]}">{html.escape(right_dots)}</tspan>'
-            f'<tspan fill="{colors["stat"]}">{html.escape(right_val_str)}</tspan>'
-        )
+        elif stype in ("kv", "dynamic_uptime"):
+            key = sec.get("key", "")
+            if stype == "dynamic_uptime":
+                raw_value = calculate_uptime(stats["created_at"])
+            else:
+                raw_value = sec.get("value", "")
 
-    elif stype == "blank":
-        return f'<tspan fill="{colors["dots"]}">.</tspan>'
+            prefix = f". {key}: "
+            # Minimum 4 dots for clean justification
+            available_val_width = total_width - len(prefix) - 4
 
-    return ""
+            if len(raw_value) > available_val_width and "," in raw_value:
+                # Wrap value across multiple lines
+                chunks = wrap_text_into_chunks(raw_value, available_val_width)
+                for idx, chunk in enumerate(chunks):
+                    if idx == 0:
+                        val_str = f" {chunk}"
+                        dots_count = max(
+                            total_width - len(prefix) - len(val_str), 3
+                        )
+                        dots = "." * dots_count
+                        row = (
+                            f'<tspan fill="{colors["key"]}">{html.escape(prefix)}</tspan>'
+                            f'<tspan fill="{colors["dots"]}">{html.escape(dots)}</tspan>'
+                            f'<tspan fill="{colors["value"]}">{html.escape(val_str)}</tspan>'
+                        )
+                    else:
+                        indent_prefix = f". {key}: "
+                        dots_count = max(
+                            total_width - len(indent_prefix) - len(f" {chunk}"),
+                            3,
+                        )
+                        dots = "." * dots_count
+                        spaces = " " * len(indent_prefix)
+                        row = (
+                            f'<tspan fill="{colors["key"]}">{html.escape(spaces)}</tspan>'
+                            f'<tspan fill="{colors["dots"]}">{html.escape(dots)}</tspan>'
+                            f'<tspan fill="{colors["value"]}"> {html.escape(chunk)}</tspan>'
+                        )
+                    rendered_rows.append(row)
+            else:
+                val_str = f" {raw_value}"
+                dots_count = max(total_width - len(prefix) - len(val_str), 3)
+                dots = "." * dots_count
+                row = (
+                    f'<tspan fill="{colors["key"]}">{html.escape(prefix)}</tspan>'
+                    f'<tspan fill="{colors["dots"]}">{html.escape(dots)}</tspan>'
+                    f'<tspan fill="{colors["value"]}">{html.escape(val_str)}</tspan>'
+                )
+                rendered_rows.append(row)
+
+        elif stype == "dual_stat":
+            left_key = sec["left"]["key"]
+            left_stat_name = sec["left"]["stat"]
+            left_val = stats.get(left_stat_name, "0")
+
+            right_key = sec["right"]["key"]
+            right_stat_name = sec["right"]["stat"]
+            right_val = stats.get(right_stat_name, "0")
+
+            # Total width = 72, separator = " | " (3 chars) -> 69 remaining -> left 34, right 35
+            left_prefix = f". {left_key}: "
+            left_val_str = f" {left_val}"
+            left_dots_count = max(34 - len(left_prefix) - len(left_val_str), 2)
+            left_dots = "." * left_dots_count
+
+            right_prefix = f". {right_key}: "
+            right_val_str = f" {right_val}"
+            right_dots_count = max(
+                35 - len(right_prefix) - len(right_val_str), 2
+            )
+            right_dots = "." * right_dots_count
+
+            row = (
+                f'<tspan fill="{colors["key"]}">{html.escape(left_prefix)}</tspan>'
+                f'<tspan fill="{colors["dots"]}">{html.escape(left_dots)}</tspan>'
+                f'<tspan fill="{colors["stat"]}">{html.escape(left_val_str)}</tspan>'
+                f'<tspan fill="{colors["pipe"]}"> | </tspan>'
+                f'<tspan fill="{colors["key"]}">{html.escape(right_prefix)}</tspan>'
+                f'<tspan fill="{colors["dots"]}">{html.escape(right_dots)}</tspan>'
+                f'<tspan fill="{colors["stat"]}">{html.escape(right_val_str)}</tspan>'
+            )
+            rendered_rows.append(row)
+
+        elif stype == "blank":
+            rendered_rows.append(f'<tspan fill="{colors["dots"]}">.</tspan>')
+
+    return rendered_rows
 
 
 def build_svg(theme, config, stats, ascii_lines):
@@ -264,19 +327,22 @@ def build_svg(theme, config, stats, ascii_lines):
             f'  <text x="28" y="{y}" fill="{colors["ascii"]}" font-family="\'Consolas\', \'Menlo\', \'DejaVu Sans Mono\', monospace" xml:space="preserve" font-size="8">{html.escape(line)}</text>'
         )
 
-    # Render Right Column: Terminal Info Rows
-    sections = config.get("sections", [])
+    # Render Right Column: Pulled leftwards to x=580 with width=72 chars
+    total_width_chars = 72
+    start_x = 580
     line_height = 24
-    total_height = len(sections) * line_height
-    start_y = max(round((728 - total_height) / 2 + 14), 60)
 
-    for i, sec in enumerate(sections):
+    sections = config.get("sections", [])
+    rows = format_rows(sections, stats, colors, total_width=total_width_chars)
+
+    total_height = len(rows) * line_height
+    start_y = max(round((728 - total_height) / 2 + 14), 50)
+
+    for i, row_content in enumerate(rows):
         y = start_y + i * line_height
-        row_content = format_row(sec, stats, colors)
-        if row_content:
-            svg.append(
-                f'  <text x="732" y="{y}" font-family="\'Consolas\', \'Menlo\', \'DejaVu Sans Mono\', monospace" xml:space="preserve" font-size="16">{row_content}</text>'
-            )
+        svg.append(
+            f'  <text x="{start_x}" y="{y}" font-family="\'Consolas\', \'Menlo\', \'DejaVu Sans Mono\', monospace" xml:space="preserve" font-size="14.5">{row_content}</text>'
+        )
 
     svg.append("</svg>")
     return "\n".join(svg)
@@ -296,7 +362,6 @@ def main():
         f"Fetching dynamic stats for {config['username']} (Token present: {bool(token)})..."
     )
     stats = fetch_github_stats(config["username"], token=token)
-    print("Stats fetched:", json.dumps(stats, indent=2))
 
     # Load ASCII assets
     dark_asset = "assets/ascii_dark.txt"
