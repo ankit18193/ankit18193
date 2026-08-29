@@ -79,7 +79,15 @@
 
 </p>
 
----
-[![](https://komarev.com/ghpvc/?username=ankit18193&icon=0&color=0)](https://visitcount.itsvg.in)
+<h2 align="center">🏆 GitHub Trophies</h2>
 
-<!-- Proudly created with GPRM ( https://gprm.itsvg.in ) -->
+<p align="center">
+  <img
+    src="https://github-profile-trophy.vercel.app/?username=ankit18193&theme=darkhub&no-frame=true&no-bg=true&margin-w=8&column=7"
+    alt="GitHub Trophies"
+  />
+</p>
+
+
+
+
