@@ -61,8 +61,14 @@ I want to understand **where it slows down, where it breaks, how it behaves unde
 ![](https://streak-stats.demolab.com/?user=ankit18193&theme=dark&hide_border=false)<br/>
 ![](https://github-readme-stats.shion.dev/api/top-langs/?username=ankit18193&theme=dark&hide_border=false&include_all_commits=false&count_private=false&layout=compact)
 
-## 🏆 GitHub Trophies
-![](https://github-profile-trophy.vercel.app/?username=ankit18193&theme=radical&no-frame=false&no-bg=true&margin-w=4)
+
+## 👾 Contribution Invasion
+
+<div align="center">
+
+![Contribution Space Shooter — my GitHub commits as arcade aliens](game.gif)
+
+</div>
 
 
 <h3>Code. Break. Learn. Optimize. Repeat.</h3>

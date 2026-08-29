@@ -1,0 +1,31 @@
+name: "\U0001F47E Update Space Shooter Animation"
+
+on:
+  schedule:
+    - cron: '0 0 * * *'   # Daily at midnight UTC
+  workflow_dispatch:        # Manual trigger from Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update-game:
+    name: Generate Space Shooter GIF
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 2    # Required for amend-commit deduplication
+
+      - name: Generate Space Shooter animation
+        uses: czl9707/gh-space-shooter@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          username: ankit18193
+          output-path: game.gif
+          strategy: random
+          fps: 40
+          no-amend: false
+          commit-message: "chore: update space shooter animation [skip ci]"
