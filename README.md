@@ -46,15 +46,6 @@
 </p>
 
 
-<h2 align="center">👾 Contribution Invasion</h2>
-
-<div align="center">
-
-![Contribution Space Shooter — my GitHub commits as arcade aliens](game.gif)
-
-</div>
-
-
 <h2 align="center">📊 Contribution Activity</h2>
 
 <p align="center">
