@@ -55,17 +55,25 @@
 </div>
 
 
+<h2 align="center">📊 Contribution Activity</h2>
+
+<p align="center">
+  <img
+    src="./assets/contribution-graph.svg"
+    alt="Ankit Yadav GitHub contribution activity"
+    width="900"
+  />
+</p>
+
+<p align="center">
+  <sub>Less activity → More activity</sub>
+</p>
+
 <h2 align="center">📈 GitHub Analytics</h2>
 
 <p align="center">
 
 <img src="https://streak-stats.demolab.com?user=ankit18193&hide_border=true&background=0D1117&ring=FF8C42&fire=FF8C42&currStreakLabel=FFB36B&sideLabels=FFB36B&currStreakNum=FFFFFF&sideNums=FFFFFF&dates=AAAAAA" />
-
-</p>
-
-<p align="center">
-
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=ankit18193&bg_color=0D1117&color=FFB36B&line=FF8C42&point=FFA45B&area=true&area_color=FFB36B&hide_border=true"/>
 
 </p>
 
